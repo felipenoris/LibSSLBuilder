@@ -1,0 +1,34 @@
+language: julia
+os:
+  - linux
+julia:
+  - 1.1
+notifications:
+  email: false
+git:
+  depth: 99999999
+cache:
+  timeout: 1000
+  directories:
+    - downloads
+env:
+  global:
+    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+    - BINARYBUILDER_AUTOMATIC_APPLE=false
+sudo: required
+before_script:
+  - julia -e 'using Pkg; pkg"add BinaryProvider"; pkg"add BinaryBuilder#master"; Pkg.build()'
+script:
+  - julia build_tarballs.jl
+
+# created with `travis setup releases`
+deploy:
+  provider: releases
+  api_key:
+    secure: CCJReeS6+AhE0CV0VoUq/SOL8JxmfkQx0M/IyXbRwAp7iL8qSGPeDFsisw0ljxyIdFXc8Cutmv4xGJZpNzeqUwQNfjUsTj729e0COzwEJlqPESsHPA9rG+Jo8ubXgXMd5OL/arUGEhA0ZIqAkIJt6AbztthsgSWk9ZvMK1EwNWIw3i0lMtPZpX7AaKZS0Guk2yBJU/nq//XpTgUajE55xjcnUZ7pMUibtkQ2MVHNxOH7hbw7+pwWt0wfsaZ1qxZGhh6KxD6DcclJhhptEkTKel/dRnlAKl4FOflGkLjTXdjNXZ7y4KhSMPvkV1sqXCJksvuKmctH9+wDLC3DpIARd+NvIhkziukndZrR1tLtXAkIX24icv572SGn83eD0n0+1onLQVT9/8E4HFuop6UMBJuULKHEh3o2hKTyJdpw5W7YDi+G2rqPEjpN7n3p90fnR19DmvUJyHaRNHH1+w69jce9bxZX27kdlKk3WWHJ9Dc/2tPinfSR1MbzMixhmOcHC8Hl1Mx6PNSQMgGiHDeUsiG4QxXHDsNp8D5fwEujyUGP1cdrUVaWgCaFbJeHc6i7QTfvqWcU2dqJBBU6oCcVLoCK7Rp7YdUmfPjlAyFho6onqobz0ABp7Kztk9sYKqW5SMZoycR3/Ex9kt86g4UGRbfhSkCyxbRFRdsEdfZY3ao=
+  file_glob: true
+  file: products/*
+  skip_cleanup: true
+  on:
+    repo: felipenoris/LibSSLBuilder
+    tags: true
