@@ -1,4 +1,7 @@
 name = "LibSSLBuilder"
+uuid = "1b0b5858-5345-11e9-36f6-5b30abc04f81"
+authors = ["Felipe Noronha <felipenoris@gmail.com>"]
+version = "1.1.1"
 
 [deps]
 BinaryBuilder = "12aac903-9f7c-5d81-afc2-d9565ea332ae"
